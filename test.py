@@ -4,7 +4,7 @@
 # Author: Roman Schulze
 
 # import libraries
-from linear_regression import *
+from model import *
 from sklearn.metrics import r2_score, mean_squared_error as mse
 from sklearn.linear_model import LinearRegression
 import numpy as np
