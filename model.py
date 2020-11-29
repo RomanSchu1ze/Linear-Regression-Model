@@ -4,8 +4,6 @@
 # Author: Roman Schulze
 
 # import libraries
-from sklearn.metrics import r2_score, mean_squared_error as mse
-from sklearn.linear_model import LinearRegression
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
