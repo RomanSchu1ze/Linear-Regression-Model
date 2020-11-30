@@ -13,7 +13,7 @@ plt.style.use("seaborn-whitegrid")
 # 1. Implementation
 # ----------------------------------------------------------------------------
 
-# Paramters:
+# Parameters:
 # X: array of independent variables
 # y: dependent variable
 # n: number of observations
