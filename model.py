@@ -132,13 +132,7 @@ def plot_residuals(residuals, n, color="blue", edgecolors="black",
 class LinearRegressionModel:
 
     def __init__(self):
-        self.X = None
-        self.y = None
-        self.beta = None
-        self.y_hat = None
-        self.residuals = None
-        self.n = None
-        self.p = None
+       pass
 
     def __repr__(self):
         return "Instance of class 'LinearRegressionModel'."
