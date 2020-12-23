@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 plt.style.use("seaborn-whitegrid")
 
 # ----------------------------------------------------------------------------
-# 1. Implementation
+# 1. Implementation ingredients
 # ----------------------------------------------------------------------------
 
 # Parameters:
@@ -26,11 +26,24 @@ plt.style.use("seaborn-whitegrid")
 # the formula to derive beta is given by: beta = ((X'X)^-1)X'y
 
 # ----------------------------------------------------------------------------
-# 2. Define Functions
+# 1.1 Define Functions
 # ----------------------------------------------------------------------------
 
-
+# derive coefficients vector beta
 def get_beta(X, y, n):
+    """
+    Derive vector of coefficients:
+ 
+    Parameters
+    ----------    
+    X: array of independent variables
+    y: dependent variable
+    n: number of observations
+    
+    Returns
+    -------
+    beta: vector of coefficients
+    """
     # define a vector of ones having the same number of rows as array X
     ones = np.ones((n, 1))
     # concatenate ones and X horizontally which is needed to estimate
@@ -45,8 +58,21 @@ def get_beta(X, y, n):
     # return beta
     return beta
 
-
+# derive predicted values
 def get_predictions(X_test, beta, n):
+    """
+    Derive predicted values of dependent variable y:
+   
+    Parameters
+    ----------    
+    X_test: array of independent variables
+    y_test: dependent variable
+    n: number of observations
+    
+    Returns
+    -------
+    y_hat: vector of predicted values
+    """
     # define a vector of ones having the same number of rows as X
     ones = np.ones((n, 1))
     # combine ones and X horizontally
@@ -56,15 +82,39 @@ def get_predictions(X_test, beta, n):
     # return predictions
     return y_hat
 
-
+# derive residuals
 def get_residuals(y, y_hat):
+    """
+    Derive vector of residuals:
+   
+    Parameters
+    ----------    
+    y: dependent variable
+    y_hat: predicted values of y 
+    
+    Returns
+    -------
+    residuals: vector containing difference of observed and predicted values
+    """
     # Derive difference between predictions and acutal realizations of y
     residuals = np.subtract(y_hat, y)
     # return residuals
     return residuals
 
-
+# derive R squared
 def get_r_2(y, y_hat):
+    """
+    Derive R sqaured, a performance measure:
+   
+    Parameters
+    ----------    
+    y: dependent variable
+    y_hat: predicted values of y 
+    
+    Returns
+    -------
+    r_2: scalar, to measure performance of model
+    """
     # nominator
     nom = np.sum(np.subtract(y, y_hat)**2)
     # denominator
@@ -74,8 +124,23 @@ def get_r_2(y, y_hat):
     # return r_2
     return r_2
 
-
+# derive adjusted R squared
 def get_adj_r_2(y, y_hat, beta, n, p):
+    """
+    Derive adjusted R sqaured, a performance measure:
+   
+    Parameters
+    ----------    
+    y: dependent variable
+    y_hat: predicted values of y 
+    beta: vector of coefficients
+    n: number of observations
+    p: number of independent variables
+        
+    Returns
+    -------
+    adj_r_2: scalar, to measure performance of model
+    """
     # derive nominator
     nom = (1 - get_r_2(y, y_hat)) * (n - 1)
     # derive denominator
@@ -85,8 +150,21 @@ def get_adj_r_2(y, y_hat, beta, n, p):
     # return adj_r_2
     return adj_r_2
 
-
+# derive RMSE
 def get_rmse(y, y_hat, n):
+    """
+    Derive RMSE, a performance measure:
+   
+    Parameters
+    ----------    
+    y: dependent variable
+    y_hat: predicted values of y 
+    n: number of observations
+    
+    Returns
+    -------
+    rmse: scalar, to measure performance of model
+    """
     # derive nominator
     nom = np.sum((y_hat - y)**2)
     # derive denominator
@@ -96,16 +174,31 @@ def get_rmse(y, y_hat, n):
     # return rmse
     return rmse
 
-
-def plot_residuals(residuals, n, color="blue", edgecolors="black",
-                   alpha=0.6):
+# plot function to visualize the distribution of the residuals
+def plot_residuals(residuals, n, color="blue", 
+                   edgecolors="black", alpha=0.6):
+    """
+    A plot shwong the distribution of the residuals:
+   
+    Parameters
+    ----------    
+    residuals: vector containing difference of observed and predicted values
+    n: number of observations
+    color: color of plot compopnents
+    edgecolor: color of components edges
+    alpha:
+    
+    Returns
+    -------
+    plot: A plot visualizing the distribution of the residuals
+    """
     # create a plot containing the distribution of the innovations
     fig, axs = plt.subplots(1, 2, figsize=(9, 4))
     # create an index for plot
     index = np.arange(0, len(residuals))
     # 1. scatterplot
-    axs[0].scatter(index, residuals, color=color, edgecolors=edgecolors,
-                   alpha=alpha)
+    axs[0].scatter(index, residuals, color=color, 
+                   edgecolors=edgecolors, alpha=alpha)
     # add xlabel
     axs[0].set_xlabel("Index")
     # add ylabel
@@ -124,19 +217,23 @@ def plot_residuals(residuals, n, color="blue", edgecolors="black",
     # show plot
     plt.show()
 
+    
 # ----------------------------------------------------------------------------
-# 3. Implementation using OOP
+# 1.2 Implementation using OOP
 # ----------------------------------------------------------------------------
 
 
+# Define class
 class LinearRegressionModel:
-
+    
+    # constructor method 
     def __init__(self):
        pass
-
+    # object representation method
     def __repr__(self):
         return "Instance of class 'LinearRegressionModel'."
-
+    
+    # fit/train mehtod to train the model 
     def fit(self, X, y):
         # Assign variables X and y
         self.X = X
@@ -166,7 +263,8 @@ class LinearRegressionModel:
                     coef[str(f"beta{i}")] = float(np.round(val, 4))
             # return vector of coefficients as a dictionary
             return coef
-
+    
+    # predict method 
     def predict(self, X_test=None):
         # Check X and y for NaN
         X_test_has_nan = np.isnan(X_test).any()
@@ -181,7 +279,8 @@ class LinearRegressionModel:
             self.residuals = get_residuals(self.y, self.y_hat)
             # return predicted values of y
             return self.y_hat
-
+        
+    # score method 
     def score(self):
         # get R squared
         r_2 = get_r_2(self.y, self.y_hat)
@@ -194,7 +293,8 @@ class LinearRegressionModel:
                "RMSE": np.round(rmse, 4)}
         # return the dictionary
         return dic
-
+    
+    # plot method
     def plot(self, **kwargs):
         # plot distribution of residuals
         plot_residuals(self.residuals, self.n, **kwargs)
