@@ -31,10 +31,10 @@ plt.style.use("seaborn-whitegrid")
 
 # Procedure:
 # ----------
-# In the first step I am going to define model relevant functionts 
+# In the first step I am going to define model relevant functions. 
 # In the second step I am implementing the Linear Regression Model 
-# using Object Oriented Programming making use of the functions defined
-# in the first place.
+# using Object Oriented Programming making use of the functions 
+# defined in the first place.
 
 
 # ----------------------------------------------------------------------------
