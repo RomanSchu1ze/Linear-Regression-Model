@@ -1,4 +1,5 @@
 # Linear Regression Model implementation using NumPy
+# Version: Python 3.7.4
 # Optimization method: Ordinary Least Squares
 # Author: Roman Schulze
 
