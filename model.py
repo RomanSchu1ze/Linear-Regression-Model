@@ -9,8 +9,10 @@ import matplotlib.pyplot as plt
 plt.style.use("seaborn-whitegrid")
 
 # ----------------------------------------------------------------------------
-# 1. Implementation ingredients
+# Implementation 
 # ----------------------------------------------------------------------------
+
+# Model ingredients:
 
 # Parameters:
 # X: array of independent variables
@@ -26,7 +28,7 @@ plt.style.use("seaborn-whitegrid")
 # the formula to derive beta is given by: beta = ((X'X)^-1)X'y
 
 # ----------------------------------------------------------------------------
-# 1.1 Define Functions
+# 1. Define Functions
 # ----------------------------------------------------------------------------
 
 # 1. derive array of coefficients 
@@ -219,7 +221,7 @@ def plot_residuals(residuals, n, color="blue",
 
     
 # ----------------------------------------------------------------------------
-# 1.2 Implementation using OOP
+# 2. Implementation of Linear Regression Model using OOP
 # ----------------------------------------------------------------------------
 
 
