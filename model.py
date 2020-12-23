@@ -13,6 +13,7 @@ plt.style.use("seaborn-whitegrid")
 # ----------------------------------------------------------------------------
 
 # Model ingredients:
+# ----------
 
 # Parameters:
 # X: array of independent variables
@@ -26,6 +27,14 @@ plt.style.use("seaborn-whitegrid")
 # Measures of fit to evaluate model performance: R_2, adj_R_2, RMSE
 # beta = array of coefficients
 # the formula to derive beta is given by: beta = ((X'X)^-1)X'y
+
+# Procedure:
+# ----------
+# In the first step I am going to define model relevant functionts 
+# In the second step I am implementing the Linear Regression Model 
+# using Object Oriented Programming making use of the functions defined
+# in the first place.
+
 
 # ----------------------------------------------------------------------------
 # 1. Define Functions
