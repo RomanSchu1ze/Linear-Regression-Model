@@ -22,29 +22,29 @@ plt.style.use("seaborn-whitegrid")
 # y_hat: predicted values
 # residuals: difference between y and y_hat
 # Measures of fit to evaluate model performance: R_2, adj_R_2, RMSE
-# beta = vector of coefficients
+# beta = array of coefficients
 # the formula to derive beta is given by: beta = ((X'X)^-1)X'y
 
 # ----------------------------------------------------------------------------
 # 1.1 Define Functions
 # ----------------------------------------------------------------------------
 
-# derive coefficients vector beta
+# derive array of coefficients 
 def get_beta(X, y, n):
     """
-    Derive vector of coefficients:
+    Derive array of coefficients:
  
     Parameters
     ----------    
-    X: array of independent variables
-    y: dependent variable
-    n: number of observations
+    X : array of independent variables, shape: (n_samples, n_features).
+    y : array containing dependent variable, shape: (n_samples).
+    n : number of observations / n_samples.
     
     Returns
     -------
-    beta: vector of coefficients
+    beta : array of coefficients, shape: (n_features).
     """
-    # define a vector of ones having the same number of rows as array X
+    # define an array of ones having the same number of rows as array X
     ones = np.ones((n, 1))
     # concatenate ones and X horizontally which is needed to estimate
     # the Intercept
@@ -65,15 +65,15 @@ def get_predictions(X_test, beta, n):
    
     Parameters
     ----------    
-    X_test: array of independent variables
-    y_test: dependent variable
-    n: number of observations
-    
+    X_test : array of independent variables, shape: (n_samples, n_features).
+    beta : array containing model coefficients, shape: (n_features).
+    n : number of observations / n_samples.
+     
     Returns
     -------
-    y_hat: vector of predicted values
+    y_hat : array of predicted values, shape: (n_samples).
     """
-    # define a vector of ones having the same number of rows as X
+    # define an array of ones having the same number of rows as X
     ones = np.ones((n, 1))
     # combine ones and X horizontally
     X = np.hstack((ones, X_test))
@@ -85,16 +85,16 @@ def get_predictions(X_test, beta, n):
 # derive residuals
 def get_residuals(y, y_hat):
     """
-    Derive vector of residuals:
+    Derive array of residuals:
    
     Parameters
     ----------    
-    y: dependent variable
-    y_hat: predicted values of y 
+    y : array containing dependent variable, shape: (n_samples).
+    y_hat : array of predicted values, shape: (n_samples).
     
     Returns
     -------
-    residuals: vector containing difference of observed and predicted values
+    residuals : array containing difference of observed and predicted values.
     """
     # Derive difference between predictions and acutal realizations of y
     residuals = np.subtract(y_hat, y)
@@ -108,12 +108,12 @@ def get_r_2(y, y_hat):
    
     Parameters
     ----------    
-    y: dependent variable
-    y_hat: predicted values of y 
+    y : array containing dependent variable, shape: (n_samples).
+    y_hat : array of predicted values, shape: (n_samples).
     
     Returns
     -------
-    r_2: scalar, to measure performance of model
+    r_2 : scalar, to measure performance of model.
     """
     # nominator
     nom = np.sum(np.subtract(y, y_hat)**2)
@@ -131,15 +131,15 @@ def get_adj_r_2(y, y_hat, beta, n, p):
    
     Parameters
     ----------    
-    y: dependent variable
-    y_hat: predicted values of y 
-    beta: vector of coefficients
-    n: number of observations
-    p: number of independent variables
-        
+    y : array containing dependent variable, shape: (n_samples).
+    y_hat : array of predicted values, shape: (n_samples).
+    beta : array containing coefficients, shape: (n_features).
+    n : number of observations / n_samples.
+    p : number of independent variables.
+     
     Returns
     -------
-    adj_r_2: scalar, to measure performance of model
+    adj_r_2 : scalar, to measure performance of model.
     """
     # derive nominator
     nom = (1 - get_r_2(y, y_hat)) * (n - 1)
@@ -157,13 +157,13 @@ def get_rmse(y, y_hat, n):
    
     Parameters
     ----------    
-    y: dependent variable
-    y_hat: predicted values of y 
-    n: number of observations
+    y : array containing dependent variable, shape: (n_samples).
+    y_hat : array of predicted values, shape: (n_samples).
+    n : number of observations.
     
     Returns
     -------
-    rmse: scalar, to measure performance of model
+    rmse : scalar, to measure performance of model.
     """
     # derive nominator
     nom = np.sum((y_hat - y)**2)
@@ -178,19 +178,19 @@ def get_rmse(y, y_hat, n):
 def plot_residuals(residuals, n, color="blue", 
                    edgecolors="black", alpha=0.6):
     """
-    A plot shwong the distribution of the residuals:
+    A plot visualizing the distribution of the residuals:
    
     Parameters
     ----------    
-    residuals: vector containing difference of observed and predicted values
-    n: number of observations
-    color: color of plot compopnents
-    edgecolor: color of components edges
-    alpha:
+    residuals : array containing difference of observed and predicted values.
+    n : number of observations.
+    color : color of plot compopnents.
+    edgecolor : color of components edges.
+    alpha : transparency of graph.
     
     Returns
     -------
-    plot: A plot visualizing the distribution of the residuals
+    plot : A plot visualizing the distribution of the residuals.
     """
     # create a plot containing the distribution of the innovations
     fig, axs = plt.subplots(1, 2, figsize=(9, 4))
@@ -225,16 +225,30 @@ def plot_residuals(residuals, n, color="blue",
 
 # Define class
 class LinearRegressionModel:
-    
+    """Class for Linear Model."""
+
     # constructor method 
     def __init__(self):
        pass
+
     # object representation method
     def __repr__(self):
         return "Instance of class 'LinearRegressionModel'."
     
     # fit/train mehtod to train the model 
     def fit(self, X, y):
+        """
+        Fit model.
+        
+        Parameters
+        ----------
+        X : array of independent variables, shape: (n_samples, n_features).
+        y : array containing dependent variable, shape: (n_samples).
+
+        Returns
+        -------
+        beta : Returns array of coefficents, shape: (n_features).
+        """
         # Assign variables X and y
         self.X = X
         self.y = y
@@ -242,7 +256,7 @@ class LinearRegressionModel:
         # Check X and y for NaN
         X_has_nan = np.isnan(X).any()
         y_has_nan = np.isnan(y).any()
-        # stop the execution if arrays contain missing values
+        # stop execution of program if arrays contain missing values
         if X_has_nan is True or y_has_nan is True:
             sys.exit("Make sure X and y do not contain nan's!")
         # if there are no missings continue running script
@@ -261,11 +275,22 @@ class LinearRegressionModel:
                 else:
                     # ...and the others to betas
                     coef[str(f"beta{i}")] = float(np.round(val, 4))
-            # return vector of coefficients as a dictionary
+            # return array of coefficients as a dictionary
             return coef
     
     # predict method 
     def predict(self, X_test=None):
+        """
+        Predict values of dependent variable y.
+        
+        Parameters
+        ----------
+        X_test : array of independent variables, shape: (n_samples, n_features).
+
+        Returns
+        -------
+        y_hat : array of predicted values, shape: (n_samples).     
+        """
         # Check X and y for NaN
         X_test_has_nan = np.isnan(X_test).any()
         # stop the execution if arrays contain missing values
@@ -282,6 +307,7 @@ class LinearRegressionModel:
         
     # score method 
     def score(self):
+        """Derive performance of model."""
         # get R squared
         r_2 = get_r_2(self.y, self.y_hat)
         # get adjusted R squared
@@ -296,5 +322,13 @@ class LinearRegressionModel:
     
     # plot method
     def plot(self, **kwargs):
+        """ 
+        Visualize residuals.
+        
+        Parameters
+        ----------
+        **kwargs: Arbitrary keyword arguments.
+
+        """
         # plot distribution of residuals
         plot_residuals(self.residuals, self.n, **kwargs)
