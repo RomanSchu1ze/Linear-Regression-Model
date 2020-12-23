@@ -328,7 +328,6 @@ class LinearRegressionModel:
         Parameters
         ----------
         **kwargs: Arbitrary keyword arguments.
-
         """
         # plot distribution of residuals
         plot_residuals(self.residuals, self.n, **kwargs)
