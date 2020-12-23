@@ -29,7 +29,7 @@ plt.style.use("seaborn-whitegrid")
 # 1.1 Define Functions
 # ----------------------------------------------------------------------------
 
-# derive array of coefficients 
+# 1. derive array of coefficients 
 def get_beta(X, y, n):
     """
     Derive array of coefficients:
@@ -58,7 +58,7 @@ def get_beta(X, y, n):
     # return beta
     return beta
 
-# derive predicted values
+# 2. derive predicted values
 def get_predictions(X_test, beta, n):
     """
     Derive predicted values of dependent variable y:
@@ -82,7 +82,7 @@ def get_predictions(X_test, beta, n):
     # return predictions
     return y_hat
 
-# derive residuals
+# 3. derive residuals
 def get_residuals(y, y_hat):
     """
     Derive array of residuals:
@@ -101,7 +101,7 @@ def get_residuals(y, y_hat):
     # return residuals
     return residuals
 
-# derive R squared
+# 4. derive R squared
 def get_r_2(y, y_hat):
     """
     Derive R sqaured, a performance measure:
@@ -124,7 +124,7 @@ def get_r_2(y, y_hat):
     # return r_2
     return r_2
 
-# derive adjusted R squared
+# 5. derive adjusted R squared
 def get_adj_r_2(y, y_hat, beta, n, p):
     """
     Derive adjusted R sqaured, a performance measure:
@@ -150,7 +150,7 @@ def get_adj_r_2(y, y_hat, beta, n, p):
     # return adj_r_2
     return adj_r_2
 
-# derive RMSE
+# 6. derive RMSE
 def get_rmse(y, y_hat, n):
     """
     Derive RMSE, a performance measure:
@@ -174,7 +174,7 @@ def get_rmse(y, y_hat, n):
     # return rmse
     return rmse
 
-# plot function to visualize the distribution of the residuals
+# 7. plot function to visualize the distribution of the residuals
 def plot_residuals(residuals, n, color="blue", 
                    edgecolors="black", alpha=0.6):
     """
